@@ -1,6 +1,5 @@
-import metachao
-
-from metachao import Aspect
+from metachao import aspect
+from metachao.aspect import Aspect
 from zope.interface import implements
 
 from dicttree.interfaces import INode
@@ -14,7 +13,7 @@ def name_in_mro(obj, key):
 
 
 class adopting(Aspect):
-    @metachao.plumb
+    @aspect.plumb
     def __delitem__(_next, self, key):
         # free the child for adoption
         value = self[key]
@@ -22,7 +21,7 @@ class adopting(Aspect):
         value.__parent__ = None
         _next(self, key)
 
-    @metachao.plumb
+    @aspect.plumb
     def __setitem__(_next, self, key, value):
         if value.__name__ is not None:
             raise ValueError("Cannot adopt child with name")
@@ -55,7 +54,7 @@ class adoptable(Aspect):
 
 # XXX: generalize to readonly_property or something
 class attrs(Aspect):
-    _attrs_factory = metachao.aspectkw(factory=dict)
+    _attrs_factory = aspect.aspectkw(factory=dict)
 
     @property
     def attrs(self):
@@ -66,7 +65,7 @@ class attrs(Aspect):
             return object.__getattribute__(self, "_attrs")
 
     # XXX: there should be something to detect collision of init kw
-    @metachao.plumb
+    @aspect.plumb
     def __init__(_next, self, attrs=None, **kw):
         _next(self, **kw)
         if attrs:
@@ -80,7 +79,7 @@ class attrs(Aspect):
 # __getattr__ is only called if __getattribute__ failed...
 
 class children_as_attrs(Aspect):
-    # @metachao.plumb
+    # @aspect.plumb
     # def __getattr__(self, _next, name):
     def __getattr__(self, name):
         """Blend in children as attributes
@@ -97,7 +96,7 @@ class children_as_attrs(Aspect):
             except KeyError:
                 raise AttributeError(name)
 
-    # @metachao.plumb
+    # @aspect.plumb
     # def __setattr__(self, _next, name, value):
     def __setattr__(self, name, value):
         """Blend in children as attributes
@@ -129,7 +128,7 @@ class nodify(Aspect):
     # INode here, but parts of it also above
     implements(INode)
 
-    @metachao.plumb
+    @aspect.plumb
     def __setitem__(_next, self, key, value):
         # XXX: does this test make sense?
         if not INode.providedBy(value):
