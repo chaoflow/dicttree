@@ -1,4 +1,4 @@
-    >>> from dicttree import Node
+    >>> from dicttree.ordereddict import Node
     >>> from dicttree.utils import iterleaves
     >>> root = Node()
     >>> root.a = Node()

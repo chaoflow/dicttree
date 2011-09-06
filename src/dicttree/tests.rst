@@ -1,4 +1,4 @@
-    >>> from dicttree import Node
+    >>> from dicttree.ordereddict import Node
     >>> node = Node()
 
 Adoption behavior::

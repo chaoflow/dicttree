@@ -1,6 +1,7 @@
 View of a tree::
 
-    >>> from dicttree import Node, View
+    >>> from dicttree.ordereddict import Node
+    >>> from dicttree.view import View
     >>> node = Node()
     >>> a = node.a = Node()
     >>> view = View(node)
