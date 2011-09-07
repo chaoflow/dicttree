@@ -1,7 +1,7 @@
 try:
     from collections import OrderedDict
-except ImportError:                      #pragma NO COVERAGE
-    from ordereddict import OrderedDict  #pragma NO COVERAGE
+except ImportError:
+    from ordereddict import OrderedDict
 
 from dicttree import aspects as dta
 
