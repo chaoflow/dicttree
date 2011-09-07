@@ -39,6 +39,7 @@ class adopting(Aspect):
 
 
 # XXX: Is zope.location worth it, i.e. small enough to be used here?
+# XXX: __name__/__parent__ vs _name/_parent
 class adoptable(Aspect):
     __name__ = None
     __parent__ = None
@@ -65,6 +66,7 @@ class attrs(Aspect):
             return object.__getattribute__(self, "_attrs")
 
     # XXX: there should be something to detect collision of init kw
+    # XXX: *args are currently not supported, not even passing them on
     @aspect.plumb
     def __init__(_next, self, attrs=None, **kw):
         _next(self, **kw)
