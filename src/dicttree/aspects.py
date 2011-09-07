@@ -52,6 +52,13 @@ class adoptable(Aspect):
     def parent(self):
         return self.__parent__
 
+    # XXX: *args are currently not supported, not even passing them on
+    @aspect.plumb
+    def __init__(_next, self, name=None, **kw):
+        _next(self, **kw)
+        if name is not None:
+            self.__name__ = name
+
 
 # XXX: generalize to readonly_property or something
 class attrs(Aspect):
