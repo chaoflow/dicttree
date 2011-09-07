@@ -22,8 +22,8 @@ class adopting(Aspect):
         _next(self, key)
 
     @aspect.plumb
-    def __setitem__(_next, self, key, value):
-        if value.__name__ is not None:
+    def __setitem__(_next, self, key, value, skip_name_check=False):
+        if not skip_name_check and value.__name__ is not None:
             raise ValueError("Cannot adopt child with name")
         if value.__parent__ is not None:
             raise ValueError("Cannot adopt child with parent")
@@ -58,6 +58,34 @@ class adoptable(Aspect):
         _next(self, **kw)
         if name is not None:
             self.__name__ = name
+
+
+class appendchild(Aspect):
+    """
+        >>> @appendchild
+        ... @adopting
+        ... class Parent(dict): pass
+        >>> @adoptable
+        ... class Child(dict): pass
+        >>> parent = Parent()
+        >>> childA = Child(name="a")
+        >>> childB = Child(name="b")
+        >>> parent.append(childA)
+        >>> parent.append(childB)
+        >>> parent.keys()
+        ['a', 'b']
+        >>> parent.append(childB)
+        Traceback (most recent call last):
+        ...
+        KeyError: 'b'
+    """
+    def append(self, value):
+        """Append a value that has a name, "" and None are valid names
+        """
+        key = value.__name__
+        if key in self:
+            raise KeyError("%s" % (key,))
+        self.__setitem__(key, value, skip_name_check=True)
 
 
 # XXX: generalize to readonly_property or something
@@ -128,6 +156,7 @@ class traverse_via_div(Aspect):
         return reduce(lambda acc, x: acc[x], psegs, self)
 
 
+@appendchild         # XXX: is this node or an addon?
 @adopting            # XXX: Is every node adopting?
 @adoptable
 @children_as_attrs   # XXX: is this node or an addon?
