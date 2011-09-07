@@ -15,6 +15,7 @@ TESTFILES = [
 
 TESTMODULES = [
     'dicttree.aspects',
+    'dicttree.utils',
 # there is a test declared in INode, but it does not work
 #    'dicttree.interfaces',
 #    'dicttree.view',
