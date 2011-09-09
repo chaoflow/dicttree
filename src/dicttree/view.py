@@ -2,7 +2,7 @@ from zope.interface import implements
 
 from dicttree import aspects as dta
 from dicttree.interfaces import INode
-from dicttree.utils import iterleaves
+from dicttree.tools import iterleaves
 
 
 SCOPE_ITERATORS = {

@@ -1,5 +1,5 @@
     >>> from dicttree.ordereddict import Node
-    >>> from dicttree.utils import iterleaves
+    >>> from dicttree.tools import iterleaves
     >>> root = Node()
     >>> root.a = Node()
     >>> root.b = Node()

@@ -79,4 +79,3 @@ def mgroupby(iterator, groupkeys=()):
     if not groupkeys:
         return iterator
     return ((x[0], mgroupby(x[1], groupkeys)) for x in iterator)
-

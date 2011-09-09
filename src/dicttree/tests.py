@@ -9,13 +9,13 @@ optionflags = doctest.NORMALIZE_WHITESPACE | \
 
 TESTFILES = [
     'tests.rst',
-    'test_utils.rst',
+    'test_tools.rst',
 #    'test_view.rst',
 ]
 
 TESTMODULES = [
     'dicttree.aspects',
-    'dicttree.utils',
+    'dicttree.tools',
 # there is a test declared in INode, but it does not work
 #    'dicttree.interfaces',
 #    'dicttree.view',
