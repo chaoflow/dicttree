@@ -1,13 +1,37 @@
-* DONE py.test and doctest and import pdb
+* testing 
+** DONE py.test and doctest and import pdb
 CLOSED: [2011-08-30 Tue 23:58]
 IOError: reading from stdin while output is captured
 import pytest;pytest.set_trace() or
 py.test --capture=no
 http://stackoverflow.com/questions/2678792/can-i-debug-with-python-debugger-when-using-py-test-somehow
-* TODO py.test doctest globs (interact, pp)
-* TODO doctest.NORMALIZE_WHITESPACE ... (see tests.py)
+** TODO py.test doctest globs (interact, pp)
+** TODO doctest.NORMALIZE_WHITESPACE ... (see tests.py)
 via patching pytest doctest for now
-* TODO py.test test layers a la plone.testing?
-* TODO coveragerc or wrapper of py.test
-* TODO py.test test discovery (test_)*.rst - do we want test_ prefix?
-* TODO ignore paths with globbing via config file
+** TODO py.test test layers a la plone.testing?
+** TODO coveragerc or wrapper of py.test
+** TODO py.test test discovery (test_)*.rst - do we want test_ prefix?
+** TODO ignore paths with globbing via config file
+** py.test win over zope testrunner
+*** zope testrunner
+Test-module import failures:
+
+Module: dicttree.tests
+
+ImportError: No module named utils
+
+
+
+Test-modules with import problems:
+  dicttree.tests
+Total: 0 tests, 0 failures, 0 errors in 0.000 seconds.
+
+*** py.test
+...
+src/dicttree/view.py:5: in <module>
+>   from dicttree.utils import iterleaves
+E   ImportError: No module named utils
+
+** py.test win over zope testrunner
+all modules are included in the coverage test, not just those reached
+via test files
