@@ -1,5 +1,5 @@
-import unittest
 import doctest
+import unittest2 as unittest
 from pprint import pprint
 from interlude import interact
 
