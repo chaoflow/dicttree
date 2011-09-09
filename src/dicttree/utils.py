@@ -1,6 +1,8 @@
 from itertools import groupby
 
 def iterleaves(iterator):
+    """return an iterator over the leaves of a tree
+    """
     for x in iterator:
         if x.keys():
             for y in iterleaves(x.itervalues()):
