@@ -3,8 +3,7 @@ import doctest
 from pprint import pprint
 from interlude import interact
 
-optionflags = doctest.NORMALIZE_WHITESPACE | \
-              doctest.ELLIPSIS | \
+optionflags = doctest.ELLIPSIS | \
               doctest.REPORT_ONLY_FIRST_FAILURE
 
 TESTFILES = [

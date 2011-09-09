@@ -49,7 +49,7 @@ def mgroupby(iterator, groupkeys=()):
         ...     return x[2]
 
         >>> a = mgroupby(items, groupkeys=[gkey0, gkey1, gkey2])
-        >>> printgiter(a)
+        >>> printgiter(a) # doctest: +NORMALIZE_WHITESPACE
         (1, <generator object <genexpr> at 0x...>)
          (3, <itertools.groupby object at 0x...>)
           (5, <itertools._grouper object at 0x...>)
