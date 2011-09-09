@@ -8,8 +8,8 @@ optionflags = doctest.ELLIPSIS | \
 
 TESTFILES = [
     'tests.rst',
-    'test_tools.rst',
-#    'test_view.rst',
+    'tools.rst',
+#    'view.rst',
 ]
 
 TESTMODULES = [
