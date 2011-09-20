@@ -19,7 +19,7 @@ class adopting(Aspect):
         value = self[key]
         value.__name__ = None
         value.__parent__ = None
-        _next(self, key)
+        _next(key)
 
     @aspect.plumb
     def __setitem__(_next, self, key, value, skip_name_check=False):
@@ -31,7 +31,7 @@ class adopting(Aspect):
         value.__name__ = key
         value.__parent__ = self
         try:
-            _next(self, key, value)
+            _next(key, value)
         except:
             value.__name__ = None
             value.__parent__ = None
@@ -55,7 +55,7 @@ class adoptable(Aspect):
     # XXX: *args are currently not supported, not even passing them on
     @aspect.plumb
     def __init__(_next, self, name=None, **kw):
-        _next(self, **kw)
+        _next(**kw)
         if name is not None:
             self.__name__ = name
 
@@ -104,7 +104,7 @@ class attrs(Aspect):
     # XXX: *args are currently not supported, not even passing them on
     @aspect.plumb
     def __init__(_next, self, attrs=None, **kw):
-        _next(self, **kw)
+        _next(**kw)
         if attrs:
             self.attrs.update(attrs)
 
@@ -125,7 +125,7 @@ class children_as_attrs(Aspect):
         real attribute.
         """
         try:
-            # return _next(self, name)
+            # return _next(name)
             return object.__getattribute__(self, name)
         except AttributeError:
             try:
@@ -143,7 +143,7 @@ class children_as_attrs(Aspect):
         to be a child.
         """
         if name.startswith('_') or name_in_mro(self, name):
-            # _next(self, name, value)
+            # _next(name, value)
             object.__setattr__(self, name, value)
         else:
             self[name] = value
@@ -171,4 +171,4 @@ class nodify(Aspect):
         # XXX: does this test make sense?
         if not INode.providedBy(value):
             raise ValueError("Children need to provide INode")
-        _next(self, key, value)
+        _next(key, value)
