@@ -2,6 +2,9 @@ from metachao import aspect
 from metachao.aspect import Aspect
 from zope.interface import implements
 
+from dicttree.aspects._views import Itervalues
+from dicttree.aspects._views import leaves
+from dicttree.aspects._views import mgroup
 from dicttree.interfaces import INode
 
 

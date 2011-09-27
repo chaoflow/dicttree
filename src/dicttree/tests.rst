@@ -99,3 +99,45 @@ Passing attributes via init::
     3
     >>> node.attrs.d
     4
+
+
+
+
+mgroup / itervaluesobj::
+    >>> from dicttree import aspects as dta
+
+    >>> nodelist = [
+    ...     Node(attrs=dict(a=1, b=10, c=100)),
+    ...     Node(attrs=dict(a=1, b=10, c=200)),
+    ...     Node(attrs=dict(a=1, b=10, c=300)),
+    ...     Node(attrs=dict(a=1, b=20, c=100)),
+    ...     Node(attrs=dict(a=1, b=20, c=200)),
+    ...     Node(attrs=dict(a=1, b=20, c=300)),
+    ...     Node(attrs=dict(a=2, b=10, c=100)),
+    ...     Node(attrs=dict(a=2, b=10, c=200)),
+    ...     Node(attrs=dict(a=2, b=10, c=300)),
+    ...     Node(attrs=dict(a=2, b=20, c=100)),
+    ...     Node(attrs=dict(a=2, b=20, c=200)),
+    ...     Node(attrs=dict(a=2, b=20, c=300)),
+    ...     ]
+
+    >>> from dicttree.aspects import Itervalues
+    >>> root = Itervalues(name="root", itervalues=lambda : iter(nodelist))
+    >>> [x for x in root.itervalues()] == nodelist
+    True
+    >>> [x for x in root.itervalues()] == nodelist
+    True
+
+    >>> groupkeys = (
+    ...     lambda x: x.attrs.a,
+    ...     lambda x: x.attrs.b,
+    ...     )
+    >>> group = dta.mgroup(root, groupkeys=groupkeys)
+    >>> members = [x for x in group.itervalues()]
+    >>> [x.name for x in members]
+    [1, 2]
+    >>> submembers = list(members[0].itervalues())
+    >>> [x.name for x in submembers]
+    [10, 20]
+    >>> [x.attrs.c for x in submembers[0].itervalues()]
+    [100, 200, 300]
