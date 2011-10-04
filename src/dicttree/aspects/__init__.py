@@ -82,6 +82,8 @@ class appendchild(Aspect):
         ...
         KeyError: 'b'
     """
+    # XXX: not nice that we need the **kw
+    # also not good that append depends on adopting, should just be aware of it
     def append(self, value):
         """Append a value that has a name, "" and None are valid names
         """
@@ -170,8 +172,8 @@ class nodify(Aspect):
     implements(INode)
 
     @aspect.plumb
-    def __setitem__(_next, self, key, value):
+    def __setitem__(_next, self, key, value, **kw):
         # XXX: does this test make sense?
         if not INode.providedBy(value):
             raise ValueError("Children need to provide INode")
-        _next(key, value)
+        _next(key, value, **kw)
