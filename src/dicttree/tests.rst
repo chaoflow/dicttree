@@ -9,8 +9,8 @@ Adoption behavior::
     >>> child.parent is node
     True
     >>> del node['child']
-    >>> child.name is None
-    True
+    >>> child.name
+    'child'
     >>> child.parent is None
     True
 
@@ -18,13 +18,6 @@ Adoption behavior::
     Traceback (most recent call last):
       ...
     ValueError: Children need to provide INode
-
-    >>> nope = Node()
-    >>> nope.__name__ = "foo"
-    >>> node['bar'] = nope
-    Traceback (most recent call last):
-      ...
-    ValueError: Cannot adopt child with name
 
     >>> nope = Node()
     >>> nope.__parent__ = "foo"

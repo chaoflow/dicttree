@@ -5,19 +5,14 @@ from metachao.aspect import Aspect
 class adopting(Aspect):
     @aspect.plumb
     def __delitem__(_next, self, key):
-        # free the child for adoption
         value = self[key]
-        value.__name__ = None
         value.__parent__ = None
         _next(key)
 
     @aspect.plumb
-    def __setitem__(_next, self, key, value, skip_name_check=False):
-        if not skip_name_check and value.__name__ is not None:
-            raise ValueError("Cannot adopt child with name")
+    def __setitem__(_next, self, key, value):
         if value.__parent__ is not None:
             raise ValueError("Cannot adopt child with parent")
-        # adopt
         value.__name__ = key
         value.__parent__ = self
         try:

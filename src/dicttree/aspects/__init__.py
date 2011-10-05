@@ -43,7 +43,7 @@ class appendchild(Aspect):
         key = value.__name__
         if key in self:
             raise KeyError("%s" % (key,))
-        self.__setitem__(key, value, skip_name_check=True)
+        self[key] = value
 
 
 # XXX: generalize to readonly_property or something
