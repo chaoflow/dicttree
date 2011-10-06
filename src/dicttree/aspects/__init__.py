@@ -48,15 +48,29 @@ class appendchild(Aspect):
 
 # XXX: generalize to readonly_property or something
 class attrs(Aspect):
+    """
+    Ideally:
+    - attrs is created automatically for instances
+    - attrs is fetched from the prototype for prototypees
+    - attrs dict prototype is achieved through special factory
+    """
     _attrs_factory = aspect.aspectkw(factory=dict)
 
     @property
     def attrs(self):
+        # If we have _attrs, return it
         try:
             return object.__getattribute__(self, "_attrs")
         except AttributeError:
-            object.__setattr__(self, "_attrs", self._attrs_factory())
-            return object.__getattribute__(self, "_attrs")
+            pass
+        # Fallback to our eventual prototype
+        try:
+            return self.__metachao_prototype__.attrs
+        except AttributeError:
+            pass
+        # Create _attrs for us
+        object.__setattr__(self, "_attrs", self._attrs_factory())
+        return object.__getattribute__(self, "_attrs")
 
     # XXX: there should be something to detect collision of init kw
     # XXX: *args are currently not supported, not even passing them on
