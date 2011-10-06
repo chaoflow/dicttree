@@ -3,6 +3,8 @@ from itertools import groupby
 from metachao import aspect
 from metachao.aspect import Aspect
 
+from dicttree.aspects.adoption import adoptable
+
 
 class leaves(Aspect):
     """Take a tree's leaves as direct children
@@ -17,10 +19,9 @@ class leaves(Aspect):
                 yield x
 
 
+@adoptable
 class Itervalues(object):
-    def __init__(self, name=None, itervalues=None):
-        if name is not None:
-            self.name = name
+    def __init__(self, itervalues=None):
         if itervalues is not None:
             self._cfg_itervalues = itervalues
 
