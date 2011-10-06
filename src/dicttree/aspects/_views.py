@@ -26,6 +26,8 @@ class Itervalues(object):
             self._cfg_itervalues = itervalues
 
     def itervalues(self):
+        # XXX: should we ensure nodes?
+        # XXX: should we ensure parenthood and name?
         return self._cfg_itervalues()
 
 
@@ -50,10 +52,14 @@ class mgroup(Aspect):
         if self._cfg_groupkeys:
             gkey = self._cfg_groupkeys[0]
             query = lambda key: lambda : filter(lambda x: gkey(x) == key, _next())
-            gener = (mgroup(Itervalues(name=key, itervalues=query(key)),
+            gener = (mgroup(Itervalues(name=key,
+                                       parent=self,
+                                       itervalues=query(key)),
                             groupkeys=self._cfg_groupkeys[1:],
                             aspects=self._cfg_aspects[1:])
                      for key, _ in groupby(gener, gkey))
-        if len(self._cfg_aspects) > 0:
+        else:
+            gener = (adoptable(x, parent=self) for x in gener)
+        if self._cfg_aspects:
             gener = (self._cfg_aspects[0](x) for x in gener)
         return gener

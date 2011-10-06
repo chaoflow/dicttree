@@ -116,6 +116,9 @@ mgroup / itervaluesobj::
 
     >>> from dicttree.aspects import Itervalues
     >>> root = Itervalues(name="root", itervalues=lambda : iter(nodelist))
+
+Iterator is not getting exhausted::
+
     >>> [x for x in root.itervalues()] == nodelist
     True
     >>> [x for x in root.itervalues()] == nodelist
@@ -126,11 +129,24 @@ mgroup / itervaluesobj::
     ...     lambda x: x.attrs.b,
     ...     )
     >>> group = dta.mgroup(root, groupkeys=groupkeys)
+    >>> group.name
+    'root'
+    >>> group.parent is None
+    True
     >>> members = [x for x in group.itervalues()]
     >>> [x.name for x in members]
     [1, 2]
+    >>> members[0].parent is group
+    True
     >>> submembers = list(members[0].itervalues())
     >>> [x.name for x in submembers]
     [10, 20]
-    >>> [x.attrs.c for x in submembers[0].itervalues()]
+    >>> submembers[0].parent is members[0]
+    True
+    >>> subsubmembers = list(submembers[0].itervalues())
+    >>> [x.attrs.c for x in subsubmembers]
     [100, 200, 300]
+    >>> subsubmembers[0].parent is submembers[0]
+    True
+    >>> subsubmembers[0].__metachao_prototype__ is not submembers[0]
+    True
