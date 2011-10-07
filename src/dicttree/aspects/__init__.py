@@ -128,6 +128,16 @@ class traverse_via_div(Aspect):
         return reduce(lambda acc, x: acc[x], psegs, self)
 
 
+class provideINode(Aspect):
+    @aspect.plumb
+    def __setitem__(_next, self, key, value, **kw):
+        # XXX: does this test make sense?
+        if not INode.providedBy(value):
+            raise ValueError("Children need to provide INode")
+        _next(key, value, **kw)
+
+
+@provideINode
 @appendchild         # XXX: is this node or an addon?
 @adopting            # XXX: Is every node adopting?
 @adoptable
@@ -137,10 +147,3 @@ class nodify(Aspect):
     # XXX: split up this interface
     # INode here, but parts of it also above
     implements(INode)
-
-    @aspect.plumb
-    def __setitem__(_next, self, key, value, **kw):
-        # XXX: does this test make sense?
-        if not INode.providedBy(value):
-            raise ValueError("Children need to provide INode")
-        _next(key, value, **kw)
