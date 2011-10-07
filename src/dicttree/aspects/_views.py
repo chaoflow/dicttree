@@ -3,7 +3,7 @@ from itertools import groupby
 from metachao import aspect
 from metachao.aspect import Aspect
 
-from dicttree.aspects.adoption import adoptable
+from dicttree.aspects.adoption import adoptable, hasparent
 
 
 class leaves(Aspect):
@@ -59,7 +59,7 @@ class mgroup(Aspect):
                             aspects=self._cfg_aspects[1:])
                      for key, _ in groupby(gener, gkey))
         else:
-            gener = (adoptable(x, parent=self) for x in gener)
+            gener = (hasparent(x, parent=self) for x in gener)
         if self._cfg_aspects:
             gener = (self._cfg_aspects[0](x) for x in gener)
         return gener
