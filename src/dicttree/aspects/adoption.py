@@ -23,15 +23,23 @@ class adopting(Aspect):
             raise
 
 
-# XXX: Is zope.location worth it, i.e. small enough to be used here?
-# XXX: __name__/__parent__ vs _name/_parent
-class adoptable(Aspect):
+class hasname(Aspect):
     __name__ = aspect.aspectkw(name=None)
-    __parent__ = aspect.aspectkw(parent=None)
 
     @property
     def name(self):
         return self.__name__
+
+    # XXX: *args are currently not supported, not even passing them on
+    @aspect.plumb
+    def __init__(_next, self, name=None, **kw):
+        _next(**kw)
+        if name is not None:
+            self.__name__ = name
+
+
+class hasparent(Aspect):
+    __parent__ = aspect.aspectkw(parent=None)
 
     @property
     def parent(self):
@@ -39,9 +47,19 @@ class adoptable(Aspect):
 
     # XXX: *args are currently not supported, not even passing them on
     @aspect.plumb
-    def __init__(_next, self, name=None, parent=None, **kw):
+    def __init__(_next, self, parent=None, **kw):
         _next(**kw)
-        if name is not None:
-            self.__name__ = name
         if parent is not None:
             self.__parent__ = parent
+
+
+# XXX: Is zope.location worth it, i.e. small enough to be used here?
+# XXX: __name__/__parent__ vs _name/_parent
+@hasname
+@hasparent
+class adoptable(Aspect):
+    pass
+
+#adoptable = hasname(hasparent)
+
+#adoptable = compose(hasname, hasparent)
