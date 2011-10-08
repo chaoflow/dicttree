@@ -1,4 +1,5 @@
-from itertools import groupby
+from itertools import groupby, imap
+
 
 def iterleaves(iterator):
     """return an iterator over the leaves of a tree
@@ -79,3 +80,8 @@ def mgroupby(iterator, groupkeys=()):
     if not groupkeys:
         return iterator
     return ((x[0], mgroupby(x[1], groupkeys)) for x in iterator)
+
+
+def name_in_mro(obj, key):
+    return any(imap(lambda x: key in x.__dict__,
+                    [obj] + obj.__class__.mro()))

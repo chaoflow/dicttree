@@ -7,13 +7,7 @@ from dicttree.aspects._views import leaves
 from dicttree.aspects._views import mgroup
 from dicttree.aspects.adoption import *
 from dicttree.interfaces import INode
-
-
-# XXX: move somewhere: aspect.utils / dicttree.utils?
-from itertools import imap
-def name_in_mro(obj, key):
-    return any(imap(lambda x: key in x.__dict__,
-                    [obj] + obj.__class__.mro()))
+from dicttree.tools import name_in_mro
 
 
 class appendchild(Aspect):
@@ -35,8 +29,6 @@ class appendchild(Aspect):
         ...
         KeyError: 'b'
     """
-    # XXX: not nice that we need the **kw
-    # also not good that append depends on adopting, should just be aware of it
     def append(self, value):
         """Append a value that has a name, "" and None are valid names
         """
