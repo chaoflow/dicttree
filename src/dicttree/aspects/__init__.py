@@ -54,7 +54,7 @@ class attrs(Aspect):
     - attrs is fetched from the prototype for prototypees
     - attrs dict prototype is achieved through special factory
     """
-    _attrs_factory = aspect.aspectkw(factory=dict)
+    _cfg_attrs_factory = aspect.aspectkw(factory=dict)
 
     @property
     def attrs(self):
@@ -69,7 +69,7 @@ class attrs(Aspect):
         except AttributeError:
             pass
         # Create _attrs for us
-        object.__setattr__(self, "_attrs", self._attrs_factory())
+        object.__setattr__(self, "_attrs", self._cfg_attrs_factory())
         return object.__getattribute__(self, "_attrs")
 
     # XXX: there should be something to detect collision of init kw
