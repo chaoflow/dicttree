@@ -53,6 +53,10 @@ class attrs(Aspect):
     - attrs is created automatically for instances
     - attrs is fetched from the prototype for prototypees
     - attrs dict prototype is achieved through special factory
+
+    attrs factory ends up in the class dictionary. If it is a class
+    itself it will just be called, if it is a function, it will result
+    in a bound method call being passed self as single argument.
     """
     _cfg_attrs_factory = aspect.aspectkw(factory=dict)
 
