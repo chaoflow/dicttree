@@ -48,6 +48,9 @@ class mgroup(Aspect):
 
     @aspect.plumb
     def itervalues(_next, self):
+        # XXX: check during aspect application
+        if type(self._cfg_aspects) is not tuple:
+            raise ValueError("Expected aspects tuple")
         gener = _next()
         if self._cfg_groupkeys:
             gkey = self._cfg_groupkeys[0]
