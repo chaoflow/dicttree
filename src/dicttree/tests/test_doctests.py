@@ -7,8 +7,8 @@ optionflags = doctest.ELLIPSIS | \
               doctest.REPORT_ONLY_FIRST_FAILURE
 
 TESTFILES = [
-    'tests.rst',
-    'tools.rst',
+    '../tests.rst',
+    '../tools.rst',
 #    'view.rst',
 ]
 
