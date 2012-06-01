@@ -8,6 +8,8 @@ from metachao import aspect
 
 
 class json(aspect.Aspect):
+    """highly experimental and probably not good
+    """
     _encoding = aspect.cfg(None)
     _parse_float = aspect.cfg(None)
     _parse_int = aspect.cfg(None)
