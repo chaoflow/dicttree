@@ -9,6 +9,11 @@ from dicttree.aspects.adoption import *
 from dicttree.interfaces import INode
 from dicttree.tools import name_in_mro
 
+try:
+    from collections import OrderedDict
+except ImportError:                      #pragma NO COVERAGE
+    from ordereddict import OrderedDict  #pragma NO COVERAGE
+
 
 class appendchild(Aspect):
     """
@@ -50,7 +55,7 @@ class attrs(Aspect):
     itself it will just be called, if it is a function, it will result
     in a bound method call being passed self as single argument.
     """
-    _cfg_attrs_factory = aspect.aspectkw(factory=dict)
+    _cfg_attrs_factory = aspect.aspectkw(factory=OrderedDict)
 
     @property
     def attrs(self):
@@ -65,8 +70,12 @@ class attrs(Aspect):
         except AttributeError:
             pass
         # Create _attrs for us
-        object.__setattr__(self, "_attrs", self._cfg_attrs_factory())
-        return object.__getattribute__(self, "_attrs")
+        attrs = self._cfg_attrs_factory()
+        if getattr(attrs, '__name__', None) is None:
+            attrs.__name__ = '__attrs__'
+        attrs.__parent__ = self
+        object.__setattr__(self, "_attrs", attrs)
+        return attrs
 
     # XXX: there should be something to detect collision of init kw
     # XXX: *args are currently not supported, not even passing them on
