@@ -47,7 +47,7 @@ class csv(aspect.Aspect):
                 continue
             name = i - self._skip
             childtype = self._childtype or self.__metachao_class__
-            child = childtype()
+            child = childtype(name=name)
             for k,col in enumerate(self._columns):
                 try:
                     value = row.pop(0)
@@ -60,4 +60,4 @@ class csv(aspect.Aspect):
                     if col.type and not isinstance(value, col.type):
                         value = col.type(value)
                 child.attrs[col.name] = value
-            self[name] = child
+            self.append(child)
