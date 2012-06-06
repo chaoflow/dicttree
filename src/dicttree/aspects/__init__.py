@@ -126,6 +126,16 @@ class children_as_attrs(Aspect):
             self[name] = value
 
 
+class populate(Aspect):
+    _childspec = aspect.cfg(())
+
+    @aspect.plumb
+    def __init__(_next, self, **kw):
+        _next(**kw)
+        for name, factory in self._childspec:
+            self[name] = factory()
+
+
 class traverse_via_div(Aspect):
     def __div__(self, relpath):
         # FUTURE: some way to escape the /
