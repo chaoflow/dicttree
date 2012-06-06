@@ -133,7 +133,7 @@ class populate(Aspect):
     def __init__(_next, self, **kw):
         _next(**kw)
         for name, factory in self._childspec:
-            self[name] = factory()
+            self[name] = factory(name=name, parent=self)
 
 
 class traverse_via_div(Aspect):
