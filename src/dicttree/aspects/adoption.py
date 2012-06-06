@@ -12,7 +12,8 @@ class adopting(Aspect):
     @aspect.plumb
     def __setitem__(_next, self, key, value):
         if value.__parent__ is not None:
-            raise ValueError("Cannot adopt child with parent")
+            if not value.__parent__ is self and value.__name__ is not key:
+                raise ValueError("Cannot adopt child with parent")
         oldname = value.__name__
         value.__name__ = key
         value.__parent__ = self
