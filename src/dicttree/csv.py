@@ -9,7 +9,7 @@ class _NONE:
     pass
 
 
-class Column(object):
+class Field(object):
     name = None
     type = None
     default = _NONE
@@ -31,14 +31,14 @@ class csv(aspect.Aspect):
     """
     # XXX: childtype might be moved out if needed by other aspects
     _childtype = aspect.cfg(None)
-    _columns = aspect.cfg(None)
+    _schema = aspect.cfg(None)
     _skip = aspect.cfg(0)
 
     def load(self, stream):
         """Load tree from csv stream
         """
-        if self._columns is None:
-            raise ValueError('colnames are not set')
+        if self._schema is None:
+            raise ValueError('schema not set')
 
         # XXX: make all dialect stuff configureable via aspect.cfg
         reader = csvlib.reader(stream, delimiter=';')
@@ -48,7 +48,7 @@ class csv(aspect.Aspect):
             name = i - self._skip
             childtype = self._childtype or self.__metachao_class__
             child = childtype(name=name)
-            for k,col in enumerate(self._columns):
+            for k,col in enumerate(self._schema):
                 try:
                     value = row.pop(0)
                 except IndexError:
