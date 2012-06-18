@@ -10,16 +10,19 @@ class _NONE:
 
 
 class Field(object):
-    name = None
-    type = None
     default = _NONE
+    name = None
+    readonly = False
+    type = None
 
-    def __init__(self, name, type=None, default=None):
+    def __init__(self, name, type=None, default=None, readonly=None):
         self.name = name
         if type is not None:
             self.type = type
         if default is not None:
             self.default = default
+        if readonly is not None:
+            self.readonly = readonly
 
 
 class csv(aspect.Aspect):
