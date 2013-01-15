@@ -28,8 +28,8 @@ setup(name='dicttree',
       install_requires=[
           'setuptools',
           'metachao',
-          'interlude',       # for testing
+#          'interlude',       # for testing
           'zope.interface',  # XXX: make this optional?
-          'ordereddict'      # XXX: make this optional?
+#          'ordereddict'      # XXX: make this optional?
           ],
       )
