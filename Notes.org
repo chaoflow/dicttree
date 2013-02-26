@@ -35,3 +35,39 @@ E   ImportError: No module named utils
 ** py.test win over zope testrunner
 all modules are included in the coverage test, not just those reached
 via test files
+
+* Discussion
+** dict API
+** adapter and mixin
+** configuration
+*** per node
+*** for children
+*** for grand children
+*** by pattern
+*** how does a node get its attributes?
+*** how does a node get its children?
+** controls?
+** proxies/connections
+*** dicttree.ldap
+*** dicttree.hydra
+*** dicttree.pyquery
+*** dicttree.github
+*** dicttree.pypi
+** start minimal
+*** provide metaprogramming as needed via metachao
+** spaces
+*** stored in a database
+**** [] the dict directly
+**** .attrs
+*** stored per instance during runtime
+**** .cfg
+**** prototypical behaviour, fallback to next instance
+** key/val store
+*** python's mapping API getitem/setitem/delitem/iter
+*** nested key/val stores forms trees
+*** to map an LDAP directory access to a node's attributes
+.attrs namespace, mapping API
+*** readonly configuration of trees during initialization
+.cfg namespace, mapping API
+**** chained cfg
+could also be getattr/setattr/delattr
