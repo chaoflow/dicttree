@@ -1,7 +1,6 @@
 import doctest
-import unittest2 as unittest
+import unittest
 from pprint import pprint
-from interlude import interact
 
 optionflags = doctest.ELLIPSIS | \
               doctest.REPORT_ONLY_FIRST_FAILURE
@@ -30,8 +29,7 @@ def test_suite():
         doctest.DocFileSuite(
             file,
             optionflags=optionflags,
-            globs={'interact': interact,
-                   'pprint': pprint},
+            globs={'pprint': pprint},
             ) for file in TESTFILES
         ])
 
